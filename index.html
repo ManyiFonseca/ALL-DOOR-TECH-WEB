@@ -105,40 +105,49 @@
   <meta name="twitter:description" content="Fast professional commercial door solutions. Based in Riverside, serving the entire state of CA.">
   <meta name="twitter:image" content="https://alldoortech.com/assets/og-image.png">
 
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "LocalBusiness",
-    "name": "All Door Tech",
-    "image": "https://alldoortech.com/assets/images/img-webp/favicon-google.webp",
-    "telephone": "+1-951-376-1433",
-    "priceRange": "$$",
-    "address": {
-      "@type": "PostalAddress",
-      "addressLocality": "Riverside",
-      "addressRegion": "CA",
-      "postalCode": "92501",
-      "addressCountry": "US"
-    },
-    "geo": {
-      "@type": "GeoCoordinates",
-      "latitude": 33.9533,
-      "longitude": -117.3961
-    },
-    "areaServed": {
-      "@type": "State",
-      "name": "California",
-      "alternateName": "CA"
-    },
-    "url": "https://alldoortech.com",
-    "openingHoursSpecification": [{
-      "@type": "OpeningHoursSpecification",
-      "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
-      "opens": "00:00",
-      "closes": "23:59"
-    }]
-  }
-  </script>
+ <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "name": "All Door Tech",
+  
+  /* AQUÍ ESTÁ EL TRUCO: Separa el Logo de la Imagen */
+  
+  /* 1. LOGO: Usa el cuadrado de 512x512 (Perfecto para Google) */
+  "logo": "https://alldoortech.com/assets/images/img-webp/favicon-google.webp",
+  
+  /* 2. IMAGEN: Puede ser el mismo, PERO es mejor una foto real de un trabajo */
+  /* Si no tienes foto, deja el favicon, no pasa nada. */
+  "image": "https://alldoortech.com/assets/images/img-webp/favicon-google.webp",
+
+  "telephone": "+1-951-376-1433",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Riverside",
+    "addressRegion": "CA",
+    "postalCode": "92501",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 33.9533,
+    "longitude": -117.3961
+  },
+  "areaServed": {
+    "@type": "State",
+    "name": "California",
+    "alternateName": "CA"
+  },
+  "url": "https://alldoortech.com",
+  "openingHoursSpecification": [{
+    "@type": "OpeningHoursSpecification",
+    "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+    "opens": "00:00",
+    "closes": "23:59"
+  }]
+}
+</script>
 
   <script type="application/ld+json">
   {
