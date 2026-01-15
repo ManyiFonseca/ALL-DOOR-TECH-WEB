@@ -31,6 +31,8 @@
 
 <link rel="stylesheet" href="../../css/style-limpio-min.css">
 
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
   <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
   <script type="text/javascript">
    (function(){
@@ -369,9 +371,14 @@
       <label for="feed_message">Give us your feedback <span class="required">(Required)</span></label>
       <textarea id="feed_message" name="message" placeholder="How was your experience?" required></textarea>
     </div>
+   
+    <div style="grid-column: 1 / -1; display: flex; flex-direction: column; align-items: center; gap: 20px; margin-top: 15px;">
+        
+        <div class="g-recaptcha" data-sitekey="6LeI5kosAAAAAGX6wmH8HSdaDwaLNZ1bJ7NDDVFH"></div>
 
-    <button type="submit" class="form__container-customer-input submit-button-style">Submit Feedback</button>
-
+        <button type="submit" class="form__container-customer-input submit-button-style" style="width: auto; padding-left: 30px; padding-right: 30px;">Submit Feedback</button>
+    
+    </div>
     <div class="form__container-customer-confidentiality" role="note">
       <p><strong>Confidentiality Notice:</strong> The information contained is confidential.</p>
     </div>
