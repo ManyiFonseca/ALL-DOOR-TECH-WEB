@@ -4,6 +4,7 @@
 const EMAILJS_PUBLIC_KEY = "YeV2hn7sjNt9bgfv-"; // Tu Public Key
 const EMAILJS_SERVICE_ID = "service_xok36xu"; // Tu Service ID
 const EMAILJS_TEMPLATE_ID = "template_apv8d1c"; // Tu Template ID
+const RECAPTCHA_KEY = "6LeI5kosAAAAAGX6wmH8HSdaDwaLNZ1bJ7NDDVFH"; // ✅ AGREGADA LA CLAVE
 
 // Inicialización básica (por si acaso)
 (function() {
@@ -41,10 +42,10 @@ window.toggleAdtChat = function() {
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // A. INYECCIÓN DEL CHAT WIDGET
+    // A. INYECCIÓN DEL CHAT WIDGET (MODIFICADO CON CAPTCHA)
     if (!document.getElementById('chatContainer')) {
         const chatHTML = `
-        <div class="adt-chat-system" role="complementary">
+        <div class="adt-chat-system" role="complementary" style="z-index: 2147483647;">
             <div class="adt-chat-box" id="chatContainer" style="display:none;" role="dialog" aria-label="Chat support">
                 <div class="adt-chat-header" style="background:#223248; color:white; padding:15px; display:flex; align-items:center; gap:10px; border-radius:20px 20px 0 0;">
                     <div class="adt-avatar" style="position: relative; width:40px; height:40px; background:#f9ae39; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#223248; font-weight:bold;">ADT<span style="position: absolute; bottom: 2px; right: 2px; width: 10px; height: 10px; background: #28a745; border: 2px solid #223248; border-radius: 50%;"></span></div>
@@ -62,6 +63,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         <input type="text" name="first_name" aria-label="Full Name" placeholder="Your Name" required style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:13px;">
                         <input type="email" name="email" aria-label="Email Address" placeholder="Email Address" required style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:13px;">
                         <textarea name="message" aria-label="Your Message" placeholder="How can we help?" required style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:13px; resize:none;" rows="2"></textarea>
+                        
+                        <div id="recaptcha-chat" style="margin-bottom: 10px; transform: scale(0.77); transform-origin: 0 0;"></div>
+
                         <button type="submit" style="width:100%; background:#223248; color:#f9ae39; border:2px solid #f9ae39; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer;">SEND MESSAGE</button>
                     </form>
                 </div>
@@ -70,7 +74,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 <i class="bi bi-chat-fill"></i>
             </button>
         </div>`;
+        
         document.body.insertAdjacentHTML('beforeend', chatHTML);
+
+        // ✅ NUEVO: RENDERIZADO MANUAL DEL CAPTCHA (IMPORTANTE)
+        setTimeout(() => {
+            if (window.grecaptcha && window.grecaptcha.render) {
+                try {
+                    grecaptcha.render('recaptcha-chat', {
+                        'sitekey': RECAPTCHA_KEY,
+                        'hl': 'en' // Inglés
+                    });
+                } catch(e) { console.log("Captcha ya listo"); }
+            }
+        }, 1500);
     }
 
     // B. HEADER & MENÚ MÓVIL (Con Overlay)
@@ -141,7 +158,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ======================================================
-    // F. LÓGICA DE ENVÍO (EmailJS) - CORREGIDA
+    // F. LÓGICA DE ENVÍO (EmailJS) - CORREGIDA CON CAPTCHA
     // ======================================================
     const forms = [
         { id: 'chat-form', label: 'Chat Support' },
@@ -156,6 +173,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (formEl) {
             formEl.addEventListener('submit', function(e) {
                 e.preventDefault();
+
+                // ✅ VALIDACIÓN DEL CAPTCHA (SOLO PARA EL CHAT)
+                if (item.id === 'chat-form') {
+                    const response = grecaptcha.getResponse();
+                    if (response.length === 0) {
+                        alert("Please verify that you are not a robot.");
+                        return; // Detiene el envío si no marcaron la casilla
+                    }
+                }
+
                 const btn = formEl.querySelector('button[type="submit"]');
                 const originalText = btn.innerText;
 
@@ -184,23 +211,30 @@ document.addEventListener('DOMContentLoaded', () => {
                 emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY)
                     .then(() => {
                         // ÉXITO
-                        btn.innerText = 'SENT!';
-                        btn.style.backgroundColor = '#28a745';
-                        btn.style.color = 'white';
-                        formEl.reset();
-
                         if(item.id === 'chat-form') {
-                             setTimeout(() => { window.toggleAdtChat(); }, 2000);
+                            // Mensaje especial para el chat
+                            const chatBody = document.getElementById('chatBody');
+                            chatBody.innerHTML += `<div style="background:#223248; color:white; padding:10px; border-radius:10px; font-size:13px; margin-bottom:10px; align-self:flex-end; text-align:right;">Message sent! We'll allow a tech to contact you soon.</div>`;
+                            chatBody.scrollTop = chatBody.scrollHeight;
+                            formEl.reset();
+                            grecaptcha.reset(); // Limpiar captcha
+                            btn.innerText = originalText;
+                        } else {
+                            // Mensaje normal para otros formularios
+                            btn.innerText = 'SENT!';
+                            btn.style.backgroundColor = '#28a745';
+                            btn.style.color = 'white';
+                            formEl.reset();
+                            setTimeout(() => {
+                                btn.innerText = originalText;
+                                btn.style.backgroundColor = '';
+                                btn.style.color = '';
+                            }, 3000);
                         }
                         
-                        // Restaurar
-                        setTimeout(() => {
-                            btn.innerText = originalText;
-                            btn.style.backgroundColor = '';
-                            btn.style.color = '';
-                            btn.style.opacity = '1';
-                            btn.disabled = false;
-                        }, 3000);
+                        // Restaurar botón común
+                        btn.style.opacity = '1';
+                        btn.disabled = false;
                     })
                     .catch((err) => {
                         // ERROR
