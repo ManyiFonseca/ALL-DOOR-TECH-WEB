@@ -1,26 +1,23 @@
 // ======================================================
-// CONFIGURACIÓN CENTRAL (TUS CREDENCIALES)
+// CONFIGURACIÓN CENTRAL
 // ======================================================
-const EMAILJS_PUBLIC_KEY = "YeV2hn7sjNt9bgfv-"; // Tu Public Key
-const EMAILJS_SERVICE_ID = "service_xok36xu"; // Tu Service ID
-const EMAILJS_TEMPLATE_ID = "template_apv8d1c"; // Tu Template ID
-const RECAPTCHA_KEY = "6LeI5kosAAAAAGX6wmH8HSdaDwaLNZ1bJ7NDDVFH"; // ✅ AGREGADA LA CLAVE
+const EMAILJS_PUBLIC_KEY = "YeV2hn7sjNt9bgfv-"; 
+const EMAILJS_SERVICE_ID = "service_xok36xu"; 
+const EMAILJS_TEMPLATE_ID = "template_apv8d1c"; 
+const RECAPTCHA_KEY = "6LeI5kosAAAAAGX6wmH8HSdaDwaLNZ1bJ7NDDVFH"; 
 
-// Inicialización básica (por si acaso)
 (function() {
     if (typeof emailjs !== 'undefined') {
         emailjs.init(EMAILJS_PUBLIC_KEY);
     } else {
-        console.error("Librería EmailJS no encontrada. Revisa tu HTML.");
+        console.error("Librería EmailJS no encontrada.");
     }
 })();
-
 
 // ======================================================
 // 1. CHAT WIDGET & UI GLOBAL
 // ======================================================
 
-// Función Global para abrir/cerrar chat
 window.toggleAdtChat = function() {
     const chat = document.getElementById('chatContainer');
     const iconBtn = document.getElementById('chatBtn');
@@ -28,96 +25,99 @@ window.toggleAdtChat = function() {
     if (chat) {
         if (chat.style.display === 'none' || chat.style.display === '') {
             chat.style.display = 'block';
-            if(iconBtn && iconBtn.querySelector('i')) {
-                iconBtn.querySelector('i').className = 'bi bi-x-lg';
-            }
+            if(iconBtn && iconBtn.querySelector('i')) iconBtn.querySelector('i').className = 'bi bi-x-lg';
         } else {
             chat.style.display = 'none';
-            if(iconBtn && iconBtn.querySelector('i')) {
-                iconBtn.querySelector('i').className = 'bi bi-chat-fill';
-            }
+            if(iconBtn && iconBtn.querySelector('i')) iconBtn.querySelector('i').className = 'bi bi-chat-fill';
         }
     }
 };
 
+document.addEventListener('click', (e) => {
+    const chat = document.getElementById('chatContainer');
+    const btn = document.getElementById('chatBtn');
+    if (chat && chat.style.display === 'block' && !chat.contains(e.target) && !btn.contains(e.target)) {
+        window.toggleAdtChat();
+    }
+});
+
 document.addEventListener('DOMContentLoaded', () => {
 
-    // A. INYECCIÓN DEL CHAT WIDGET (MODIFICADO CON CAPTCHA)
+    // ✅ CORRECCIÓN CHAT MÓVIL
+    const mobileStyle = document.createElement('style');
+    mobileStyle.innerHTML = `
+        @media (max-width: 480px) {
+            #chatContainer {
+                width: 300px !important;
+                right: 15px !important;
+                left: auto !important;
+                bottom: 85px !important;
+                margin: 0 !important;
+            }
+            #chatBody { height: 200px !important; }
+            #recaptcha-chat { transform: scale(0.77); transform-origin: 0 0; }
+        }
+    `;
+    document.head.appendChild(mobileStyle);
+
+    // A. INYECCIÓN DEL CHAT
     if (!document.getElementById('chatContainer')) {
         const chatHTML = `
         <div class="adt-chat-system" role="complementary" style="z-index: 2147483647;">
-            <div class="adt-chat-box" id="chatContainer" style="display:none;" role="dialog" aria-label="Chat support">
+            <div class="adt-chat-box" id="chatContainer" style="display:none; position: fixed; bottom: 85px; right: 20px; width: 350px; background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-radius: 20px; overflow: hidden;" role="dialog" aria-label="Chat support">
                 <div class="adt-chat-header" style="background:#223248; color:white; padding:15px; display:flex; align-items:center; gap:10px; border-radius:20px 20px 0 0;">
                     <div class="adt-avatar" style="position: relative; width:40px; height:40px; background:#f9ae39; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#223248; font-weight:bold;">ADT<span style="position: absolute; bottom: 2px; right: 2px; width: 10px; height: 10px; background: #28a745; border: 2px solid #223248; border-radius: 50%;"></span></div>
                     <div style="flex-grow:1; text-align:left;">
                         <p style="margin:0; font-weight:bold; font-size:14px; line-height:1.2;">All Door Tech</p>
                         <small style="color:#f9ae39; font-size:11px;">Online Now</small>
                     </div>
-                    <button onclick="window.toggleAdtChat()" aria-label="Close chat" style="background:none; border:none; color:white; font-size:22px; cursor:pointer; line-height:1;">&times;</button>
+                    <button onclick="window.toggleAdtChat()" style="background:none; border:none; color:white; font-size:22px; cursor:pointer;">&times;</button>
                 </div>
                 <div style="height:250px; background:#f0f2f5; padding:15px; overflow-y:auto;" id="chatBody">
                     <div style="background:white; padding:10px; border-radius:10px; font-size:13px; margin-bottom:10px; box-shadow:0 2px 4px rgba(0,0,0,0.05);">Hi! We are All Door Tech. How can we help you with your door project today?</div>
                 </div>
                 <div style="padding:15px; background:white; border-radius:0 0 20px 20px;">
                     <form id="chat-form">
-                        <input type="text" name="first_name" aria-label="Full Name" placeholder="Your Name" required style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:13px;">
-                        <input type="email" name="email" aria-label="Email Address" placeholder="Email Address" required style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:13px;">
-                        <textarea name="message" aria-label="Your Message" placeholder="How can we help?" required style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:13px; resize:none;" rows="2"></textarea>
-                        
-                        <div id="recaptcha-chat" style="margin-bottom: 10px; transform: scale(0.77); transform-origin: 0 0;"></div>
-
+                        <input type="text" name="first_name" placeholder="Your Name" required style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:13px;">
+                        <input type="email" name="email" placeholder="Email Address" required style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:13px;">
+                        <textarea name="message" placeholder="How can we help?" required style="width:100%; margin-bottom:8px; padding:10px; border:1px solid #ddd; border-radius:8px; font-size:13px; resize:none;" rows="2"></textarea>
+                        <div id="recaptcha-chat" style="margin-bottom: 10px;"></div>
                         <button type="submit" style="width:100%; background:#223248; color:#f9ae39; border:2px solid #f9ae39; padding:10px; border-radius:8px; font-weight:bold; cursor:pointer;">SEND MESSAGE</button>
                     </form>
                 </div>
             </div>
-            <button class="adt-chat-trigger" onclick="window.toggleAdtChat()" id="chatBtn" aria-label="Open chat" aria-haspopup="true">
+            <button class="adt-chat-trigger" onclick="window.toggleAdtChat()" id="chatBtn" style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #223248; color: #f9ae39; border: 2px solid #f9ae39; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; z-index: 2147483647;">
                 <i class="bi bi-chat-fill"></i>
             </button>
         </div>`;
-        
         document.body.insertAdjacentHTML('beforeend', chatHTML);
 
-        // ✅ NUEVO: RENDERIZADO MANUAL DEL CAPTCHA (IMPORTANTE)
         setTimeout(() => {
             if (window.grecaptcha && window.grecaptcha.render) {
                 try {
-                    grecaptcha.render('recaptcha-chat', {
-                        'sitekey': RECAPTCHA_KEY,
-                        'hl': 'en' // Inglés
-                    });
+                    grecaptcha.render('recaptcha-chat', { 'sitekey': RECAPTCHA_KEY, 'hl': 'en' });
                 } catch(e) { console.log("Captcha ya listo"); }
             }
         }, 1500);
     }
 
-    // B. HEADER & MENÚ MÓVIL (Con Overlay)
+    // --- B, C, D, E Se mantienen ---
     const menuCheckbox = document.getElementById('menu-toggle');
     if (menuCheckbox) {
-        // Crear Overlay
         const overlay = document.createElement('label');
         overlay.className = 'header__overlay';
         overlay.setAttribute('for', 'menu-toggle');
         overlay.setAttribute('aria-hidden', 'true');
         menuCheckbox.insertAdjacentElement('afterend', overlay);
-
-        // Bloquear scroll al abrir
-        menuCheckbox.addEventListener('change', () => {
-            document.body.style.overflow = menuCheckbox.checked ? 'hidden' : '';
-        });
-
-        // Cerrar al hacer click en enlaces
+        menuCheckbox.addEventListener('change', () => { document.body.style.overflow = menuCheckbox.checked ? 'hidden' : ''; });
         document.querySelectorAll('.header__nav a').forEach(link => {
-            link.addEventListener('click', () => {
-                if(menuCheckbox.checked) menuCheckbox.click();
-            });
+            link.addEventListener('click', () => { if(menuCheckbox.checked) menuCheckbox.click(); });
         });
     }
 
-    // C. ACTUALIZAR AÑO COPYRIGHT
     const yearSpan = document.querySelector('[itemprop="copyrightYear"]');
     if (yearSpan) yearSpan.textContent = new Date().getFullYear();
 
-    // D. HERO SLIDER (Solo si existe en la página)
     const slides = document.querySelectorAll('.hero__slide');
     const dots = document.querySelectorAll('.indicator');
     if (slides.length > 0 && dots.length > 0) {
@@ -143,7 +143,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // E. ANIMACIONES SCROLL
     const animateElements = document.querySelectorAll('.animate-up');
     if (animateElements.length > 0) {
         const observer = new IntersectionObserver((entries) => {
@@ -158,7 +157,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // ======================================================
-    // F. LÓGICA DE ENVÍO (EmailJS) - CORREGIDA CON CAPTCHA
+    // F. LÓGICA DE ENVÍO - SOLUCIÓN PARA DOBLE CAPTCHA
     // ======================================================
     const forms = [
         { id: 'chat-form', label: 'Chat Support' },
@@ -168,25 +167,42 @@ document.addEventListener('DOMContentLoaded', () => {
         { id: 'feedback-form', label: 'Customer Feedback' }
     ];
 
+    // ✅ Función mágica para buscar el Token correcto
+    const getAnyCaptchaToken = () => {
+        if (!window.grecaptcha) return null;
+        try {
+            // Intenta obtener el token del primer widget (0)
+            let token = grecaptcha.getResponse(0);
+            // Si está vacío, intenta con el segundo (1) por si el usuario usó el otro
+            if (!token) token = grecaptcha.getResponse(1);
+            return token;
+        } catch (e) {
+            // Si falla (ej. solo hay 1 widget), intenta el método estándar
+            try { return grecaptcha.getResponse(); } catch (err) { return null; }
+        }
+    };
+
     forms.forEach(item => {
         const formEl = document.getElementById(item.id);
         if (formEl) {
             formEl.addEventListener('submit', function(e) {
                 e.preventDefault();
 
-                // ✅ VALIDACIÓN DEL CAPTCHA (SOLO PARA EL CHAT)
+                // 1. Obtener Token INTELIGENTE
+                const captchaToken = getAnyCaptchaToken();
+
+                // 2. Validación: Solo detenemos si es CHAT y no hay token.
+                // Para el formulario de contacto, dejamos pasar aunque falle la validación local
+                // para que EmailJS decida (así evitamos el bloqueo falso).
                 if (item.id === 'chat-form') {
-                    const response = grecaptcha.getResponse();
-                    if (response.length === 0) {
+                    if (!captchaToken || captchaToken.length === 0) {
                         alert("Please verify that you are not a robot.");
-                        return; // Detiene el envío si no marcaron la casilla
+                        return;
                     }
                 }
 
                 const btn = formEl.querySelector('button[type="submit"]');
                 const originalText = btn.innerText;
-
-                // 1. Estado Cargando
                 btn.innerText = 'Sending...';
                 btn.style.opacity = '0.7';
                 btn.disabled = true;
@@ -204,42 +220,37 @@ document.addEventListener('DOMContentLoaded', () => {
                     zip_code: formData.get('zip_code') || '',
                     subject: formData.get('subject') || '',
                     find_us: formData.get('source') || '',
-                    message: formData.get('message') || formData.get('feedback') || ''
+                    message: formData.get('message') || formData.get('feedback') || '',
+                    'g-recaptcha-response': captchaToken // Enviamos lo que encontramos
                 };
 
-                // 2. ENVIAR (Pasando la Key explícitamente para evitar error 400)
                 emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams, EMAILJS_PUBLIC_KEY)
                     .then(() => {
-                        // ÉXITO
                         if(item.id === 'chat-form') {
-                            // Mensaje especial para el chat
                             const chatBody = document.getElementById('chatBody');
-                            chatBody.innerHTML += `<div style="background:#223248; color:white; padding:10px; border-radius:10px; font-size:13px; margin-bottom:10px; align-self:flex-end; text-align:right;">Message sent! We'll allow a tech to contact you soon.</div>`;
+                            chatBody.innerHTML += `<div style="background:#223248; color:white; padding:10px; border-radius:10px; font-size:13px; margin-bottom:10px; align-self:flex-end; text-align:right;">Message sent! We'll contact you soon.</div>`;
                             chatBody.scrollTop = chatBody.scrollHeight;
                             formEl.reset();
-                            grecaptcha.reset(); // Limpiar captcha
+                            try { grecaptcha.reset(); } catch(e){}
                             btn.innerText = originalText;
                         } else {
-                            // Mensaje normal para otros formularios
                             btn.innerText = 'SENT!';
                             btn.style.backgroundColor = '#28a745';
                             btn.style.color = 'white';
                             formEl.reset();
+                            try { grecaptcha.reset(); } catch(e){}
                             setTimeout(() => {
                                 btn.innerText = originalText;
                                 btn.style.backgroundColor = '';
                                 btn.style.color = '';
                             }, 3000);
                         }
-                        
-                        // Restaurar botón común
                         btn.style.opacity = '1';
                         btn.disabled = false;
                     })
                     .catch((err) => {
-                        // ERROR
                         console.error('FAILED...', err);
-                        alert("Error sending message. Check console for details.");
+                        alert("Error: " + (err.text || "Check console")); 
                         btn.innerText = originalText;
                         btn.style.opacity = '1';
                         btn.disabled = false;
@@ -249,12 +260,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// ======================================================
 // G. LIGHTBOX (Galería)
-// ======================================================
 const initLightbox = () => {
-    if (document.getElementById('adt-lightbox')) return; // Evitar duplicados
-
+    if (document.getElementById('adt-lightbox')) return;
     const lb = document.createElement('div');
     lb.id = 'adt-lightbox';
     Object.assign(lb.style, {
@@ -270,17 +278,14 @@ const initLightbox = () => {
         <span style="position:absolute; top:20px; right:30px; color:white; font-size:40px; cursor:pointer;">&times;</span>
     `;
     document.body.appendChild(lb);
-
     const imgEl = document.getElementById('adt-lightbox-img');
     let images = [], currentIndex = 0;
-
     const updateImage = (idx) => {
         if (idx < 0) idx = images.length - 1;
         if (idx >= images.length) idx = 0;
         currentIndex = idx;
         imgEl.src = images[currentIndex];
     };
-
     document.addEventListener('click', (e) => {
         const clickedImg = e.target.closest('.adt-gallery-item img');
         if (clickedImg) {
@@ -291,11 +296,9 @@ const initLightbox = () => {
             document.body.style.overflow = 'hidden';
         }
     });
-
     document.getElementById('lb-prev').onclick = (e) => { e.stopPropagation(); updateImage(currentIndex - 1); };
     document.getElementById('lb-next').onclick = (e) => { e.stopPropagation(); updateImage(currentIndex + 1); };
     lb.onclick = () => { lb.style.display = 'none'; document.body.style.overflow = ''; };
-    
     document.addEventListener('keydown', (e) => {
         if (lb.style.display === 'flex') {
             if (e.key === "ArrowRight") updateImage(currentIndex + 1);
@@ -305,7 +308,6 @@ const initLightbox = () => {
     });
 };
 
-// Iniciar Lightbox
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initLightbox);
 } else {
