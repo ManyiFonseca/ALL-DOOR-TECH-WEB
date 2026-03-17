@@ -313,3 +313,38 @@ if (document.readyState === 'loading') {
 } else {
     initLightbox();
 }
+
+
+
+// ======================================================
+// LÓGICA DE BOTÓN "VIEW MORE" PARA LA GALERÍA
+// ======================================================
+document.addEventListener('DOMContentLoaded', function() {
+    const loadMoreBtn = document.getElementById('loadMoreBtn');
+    
+    if (loadMoreBtn) {
+        loadMoreBtn.addEventListener('click', function() {
+            // Busca todas las fotos que actualmente están ocultas
+            const hiddenItems = document.querySelectorAll('.gallery-item.d-none');
+            
+            // Mostrar 8 fotos nuevas con cada clic
+            const itemsToShow = 8;
+            
+            for (let i = 0; i < itemsToShow && i < hiddenItems.length; i++) {
+                hiddenItems[i].classList.remove('d-none');
+                // Efecto de aparición suave (opcional)
+                hiddenItems[i].style.opacity = 0;
+                setTimeout(() => {
+                    hiddenItems[i].style.transition = "opacity 0.5s ease";
+                    hiddenItems[i].style.opacity = 1;
+                }, 50);
+            }
+            
+            // Si ya no quedan fotos ocultas, esconder el botón
+            const remainingHidden = document.querySelectorAll('.gallery-item.d-none').length;
+            if (remainingHidden === 0) {
+                loadMoreBtn.style.display = 'none';
+            }
+        });
+    }
+});
