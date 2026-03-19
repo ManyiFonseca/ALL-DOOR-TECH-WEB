@@ -112,16 +112,9 @@
 {
   "@context": "https://schema.org",
   "@type": "LocalBusiness",
-  "name": "All Door Tech",
-  
-  /* AQUÍ ESTÁ EL TRUCO: Separa el Logo de la Imagen */
-  
-  /* 1. LOGO: Usa el cuadrado de 512x512 (Perfecto para Google) */
-  "logo": "https://alldoortech.com/assets/images/img-webp/favicon-v3.webp",
-  
-  /* 2. IMAGEN: Puede ser el mismo, PERO es mejor una foto real de un trabajo */
-  /* Si no tienes foto, deja el favicon, no pasa nada. */
-  "image": "https://alldoortech.com/assets/images/img-webp/favicon-v3.webp",
+ "name": "All Door Tech",
+"logo": "https://alldoortech.com/assets/images/img-webp/favicon-v3.webp",
+"image": "https://alldoortech.com/assets/images/img-webp/favicon-v3.webp",
 
   "telephone": "+1-951-376-1433",
   "priceRange": "$$",
@@ -959,6 +952,284 @@
 
 <!---------  CONTACT SECTOR ANDS --------------->
 
+<!-- CLIENT REVIEWS MARQUEE -->
+<section class="mq-section" aria-labelledby="mq-section-title">
+<style>
+  .mq-section { padding: 4rem 0; background: var(--secondary-dark-blue, #1c2a3d); font-family: 'Montserrat', sans-serif; overflow: hidden; }
+  .mq-wrap-header { max-width: 860px; margin: 0 auto; text-align: center; margin-bottom: 2.5rem; padding: 0 1rem; }
+  .mq-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 3px; color: #f9ae39; text-transform: uppercase; margin-bottom: 0.5rem; }
+  .mq-title { font-size: 26px; font-weight: 800; color: #ffffff; margin: 0 0 0.4rem; }
+  .mq-divider { width: 40px; height: 3px; background: #f9ae39; border-radius: 2px; margin: 0.75rem auto 0.5rem; }
+  .mq-sub { font-size: 13px; color: rgba(255,255,255,0.6); margin: 0; }
+  .mq-aggregate { display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 2.5rem; padding: 0.75rem 1.5rem; background: rgba(255,255,255,0.06); border-radius: 12px; border: 0.5px solid rgba(255,255,255,0.12); width: fit-content; margin-left: auto; margin-right: auto; }
+  .mq-big-score { font-size: 38px; font-weight: 800; color: #f9ae39; line-height: 1; }
+  .mq-score-detail { display: flex; flex-direction: column; gap: 3px; }
+  .mq-stars-row { display: flex; gap: 3px; }
+  .mq-score-label { font-size: 11px; color: rgba(255,255,255,0.55); font-weight: 500; }
+  .mq-track-wrapper { position: relative; }
+  .mq-track-wrapper::before,
+  .mq-track-wrapper::after { content: ''; position: absolute; top: 0; bottom: 0; width: 120px; z-index: 2; pointer-events: none; }
+  .mq-track-wrapper::before { left: 0; background: linear-gradient(to right, #1c2a3d, transparent); }
+  .mq-track-wrapper::after { right: 0; background: linear-gradient(to left, #1c2a3d, transparent); }
+  .mq-track { display: flex; gap: 1.25rem; width: max-content; animation: mq-scroll 28s linear infinite; }
+  .mq-track:hover { animation-play-state: paused; }
+  @keyframes mq-scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+  .mq-card { width: 300px; flex-shrink: 0; background: rgba(255,255,255,0.05); border: 0.5px solid rgba(255,255,255,0.12); border-radius: 12px; padding: 1.5rem; display: flex; flex-direction: column; gap: 0.875rem; position: relative; overflow: hidden; }
+  .mq-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: #f9ae39; }
+  .mq-quote { font-size: 40px; line-height: 0.5; color: #f9ae39; font-weight: 800; opacity: 0.3; height: 18px; }
+  .mq-text { font-size: 14px; color: rgba(255,255,255,0.85); line-height: 1.7; font-style: italic; flex: 1; }
+  .mq-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 0.875rem; border-top: 0.5px solid rgba(255,255,255,0.1); }
+  .mq-client-row { display: flex; align-items: center; gap: 8px; }
+  .mq-avatar { width: 34px; height: 34px; border-radius: 50%; background: #223248; border: 1.5px solid #f9ae39; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: #f9ae39; flex-shrink: 0; }
+  .mq-client-type { font-size: 12px; font-weight: 700; color: #ffffff; }
+  .mq-client-date { font-size: 10px; color: rgba(255,255,255,0.45); margin-top: 1px; }
+  .mq-badge { font-size: 9px; font-weight: 600; color: #f9ae39; background: rgba(249,174,57,0.12); padding: 2px 8px; border-radius: 20px; border: 0.5px solid rgba(249,174,57,0.35); white-space: nowrap; }
+  .mq-star { width: 13px; height: 13px; }
+  .mq-star-lg { width: 17px; height: 17px; }
+  .mq-hint { text-align: center; margin-top: 1.25rem; font-size: 11px; color: rgba(255,255,255,0.3); }
+</style>
+
+<div class="mq-wrap-header">
+  <div class="mq-eyebrow">Client Testimonials</div>
+  <h2 class="mq-title" id="mq-section-title">Trusted by California Businesses</h2>
+  <div class="mq-divider"></div>
+  <p class="mq-sub">Real feedback from verified commercial clients across California</p>
+</div>
+
+<div class="mq-aggregate">
+  <div class="mq-big-score">5.0</div>
+  <div class="mq-score-detail">
+    <div class="mq-stars-row">
+      <svg class="mq-star-lg" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+      <svg class="mq-star-lg" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+      <svg class="mq-star-lg" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+      <svg class="mq-star-lg" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+      <svg class="mq-star-lg" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+    </div>
+    <div class="mq-score-label">5 verified reviews · 100% satisfaction</div>
+  </div>
+</div>
+
+<div class="mq-track-wrapper">
+  <div class="mq-track">
+
+    <div class="mq-card">
+      <div class="mq-quote">"</div>
+      <div class="mq-text">Fast response and clean installation. Minimal disruption to our daily operations.</div>
+      <div class="mq-footer">
+        <div class="mq-client-row">
+          <div class="mq-avatar">RM</div>
+          <div><div class="mq-client-type">Retail Market</div><div class="mq-client-date">January 2026</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div class="mq-stars-row">
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+          </div>
+          <div class="mq-badge">Verified</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mq-card">
+      <div class="mq-quote">"</div>
+      <div class="mq-text">Always provides great and professional service, always on time and completes work in a timely manner.</div>
+      <div class="mq-footer">
+        <div class="mq-client-row">
+          <div class="mq-avatar">CG</div>
+          <div><div class="mq-client-type">County Gov. Facility</div><div class="mq-client-date">February 2026</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div class="mq-stars-row">
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+          </div>
+          <div class="mq-badge">Verified</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mq-card">
+      <div class="mq-quote">"</div>
+      <div class="mq-text">Great Services.</div>
+      <div class="mq-footer">
+        <div class="mq-client-row">
+          <div class="mq-avatar">HF</div>
+          <div><div class="mq-client-type">Healthcare Facility</div><div class="mq-client-date">February 2026</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div class="mq-stars-row">
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+          </div>
+          <div class="mq-badge">Verified</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mq-card">
+      <div class="mq-quote">"</div>
+      <div class="mq-text">Reliable and professional. Met all compliance requirements without issue.</div>
+      <div class="mq-footer">
+        <div class="mq-client-row">
+          <div class="mq-avatar">DT</div>
+          <div><div class="mq-client-type">Defense & Technology</div><div class="mq-client-date">March 2026</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div class="mq-stars-row">
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+          </div>
+          <div class="mq-badge">Verified</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mq-card">
+      <div class="mq-quote">"</div>
+      <div class="mq-text">Efficient service, great communication throughout the entire job.</div>
+      <div class="mq-footer">
+        <div class="mq-client-row">
+          <div class="mq-avatar">IL</div>
+          <div><div class="mq-client-type">Industrial Logistics</div><div class="mq-client-date">February 2026</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div class="mq-stars-row">
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+          </div>
+          <div class="mq-badge">Verified</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Duplicado para loop infinito -->
+    <div class="mq-card">
+      <div class="mq-quote">"</div>
+      <div class="mq-text">Fast response and clean installation. Minimal disruption to our daily operations.</div>
+      <div class="mq-footer">
+        <div class="mq-client-row">
+          <div class="mq-avatar">RM</div>
+          <div><div class="mq-client-type">Retail Market</div><div class="mq-client-date">January 2026</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div class="mq-stars-row">
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+          </div>
+          <div class="mq-badge">Verified</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mq-card">
+      <div class="mq-quote">"</div>
+      <div class="mq-text">Always provides great and professional service, always on time and completes work in a timely manner.</div>
+      <div class="mq-footer">
+        <div class="mq-client-row">
+          <div class="mq-avatar">CG</div>
+          <div><div class="mq-client-type">County Gov. Facility</div><div class="mq-client-date">February 2026</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div class="mq-stars-row">
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+          </div>
+          <div class="mq-badge">Verified</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mq-card">
+      <div class="mq-quote">"</div>
+      <div class="mq-text">Great Services.</div>
+      <div class="mq-footer">
+        <div class="mq-client-row">
+          <div class="mq-avatar">HF</div>
+          <div><div class="mq-client-type">Healthcare Facility</div><div class="mq-client-date">February 2026</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div class="mq-stars-row">
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+          </div>
+          <div class="mq-badge">Verified</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mq-card">
+      <div class="mq-quote">"</div>
+      <div class="mq-text">Reliable and professional. Met all compliance requirements without issue.</div>
+      <div class="mq-footer">
+        <div class="mq-client-row">
+          <div class="mq-avatar">DT</div>
+          <div><div class="mq-client-type">Defense & Technology</div><div class="mq-client-date">March 2026</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div class="mq-stars-row">
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+          </div>
+          <div class="mq-badge">Verified</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mq-card">
+      <div class="mq-quote">"</div>
+      <div class="mq-text">Efficient service, great communication throughout the entire job.</div>
+      <div class="mq-footer">
+        <div class="mq-client-row">
+          <div class="mq-avatar">IL</div>
+          <div><div class="mq-client-type">Industrial Logistics</div><div class="mq-client-date">February 2026</div></div>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px">
+          <div class="mq-stars-row">
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+            <svg class="mq-star" viewBox="0 0 20 20"><polygon points="10,1 12.9,7 19.5,7.6 14.5,12 16.2,18.5 10,15 3.8,18.5 5.5,12 0.5,7.6 7.1,7" fill="#f9ae39"/></svg>
+          </div>
+          <div class="mq-badge">Verified</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<p class="mq-hint">Hover to pause</p>
+
+</section>
+<!-- CLIENT REVIEWS MARQUEE END -->
 
 <!-- PERFECT SERVICE INCREIBLE FAST  -->
 
@@ -1128,7 +1399,7 @@
         <p class="footer__copy">
             California Contractor License – <strong>CSLB #1064323</strong><br>
             <span style="font-size: 0.75rem; opacity: 0.8; display: block; margin-top: 5px;">
-                © <span itemprop="copyrightYear">2025</span>
+                © <span itemprop="copyrightYear">2026</span>
                 <span itemprop="name">All Door Tech</span>.
                 All rights reserved. | Designed by ManyiWebSoft
             </span>
