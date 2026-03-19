@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#223248">
+  <title>Page Not Found | All Door Tech</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="canonical" href="https://alldoortech.com/">
+  <link rel="icon" href="assets/images/img-webp/logo32x32.png" type="image/webp" sizes="32x32">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --primary-dark-blue: #223248;
+      --secondary-dark-blue: #1c2a3d;
+      --primary-orange: #f9ae39;
+      --primary-orange-hover: #e0921d;
+      --text-light: #ffffff;
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: var(--primary-dark-blue);
+      color: var(--text-light);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* Fondo con patrón de puerta */
+    body::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(
+          90deg,
+          rgba(249,174,57,0.03) 0px,
+          rgba(249,174,57,0.03) 1px,
+          transparent 1px,
+          transparent 80px
+        ),
+        repeating-linear-gradient(
+          0deg,
+          rgba(249,174,57,0.03) 0px,
+          rgba(249,174,57,0.03) 1px,
+          transparent 1px,
+          transparent 80px
+        );
+      pointer-events: none;
+    }
+
+    /* Glow de fondo */
+    body::after {
+      content: '';
+      position: absolute;
+      width: 600px;
+      height: 600px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(249,174,57,0.06) 0%, transparent 70%);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+    }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      text-align: center;
+      padding: 2rem;
+      max-width: 600px;
+      animation: fadeIn 0.8s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .logo-text {
+      font-size: 1.4rem;
+      font-weight: 800;
+      letter-spacing: 1px;
+      margin-bottom: 2.5rem;
+      opacity: 0.9;
+    }
+
+    .logo-text span { color: var(--primary-orange); }
+
+    .error-number {
+      font-size: clamp(80px, 18vw, 140px);
+      font-weight: 800;
+      line-height: 1;
+      color: var(--primary-orange);
+      letter-spacing: -4px;
+      margin-bottom: 0.25rem;
+      text-shadow: 0 0 60px rgba(249,174,57,0.2);
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 40px rgba(249,174,57,0.2); }
+      50%       { text-shadow: 0 0 80px rgba(249,174,57,0.4); }
+    }
+
+    .divider {
+      width: 60px;
+      height: 3px;
+      background: var(--primary-orange);
+      border-radius: 2px;
+      margin: 1.25rem auto;
+    }
+
+    .error-title {
+      font-size: clamp(18px, 4vw, 26px);
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 1rem;
+    }
+
+    .error-message {
+      font-size: 15px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .btn-home {
+      display: inline-block;
+      background: var(--primary-orange);
+      color: var(--primary-dark-blue);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 800;
+      font-size: 13px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      padding: 14px 36px;
+      border-radius: 4px;
+      transition: background 0.2s, transform 0.15s;
+      margin-bottom: 2rem;
+    }
+
+    .btn-home:hover {
+      background: var(--primary-orange-hover);
+      transform: translateY(-2px);
+    }
+
+    .countdown-wrap {
+      font-size: 12px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 1px;
+    }
+
+    .countdown-wrap span {
+      color: var(--primary-orange);
+      font-weight: 700;
+    }
+
+    /* Barra de progreso */
+    .progress-bar {
+      width: 200px;
+      height: 2px;
+      background: rgba(255,255,255,0.1);
+      border-radius: 2px;
+      margin: 0.75rem auto 0;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: var(--primary-orange);
+      border-radius: 2px;
+      width: 0%;
+      animation: progress 5s linear forwards;
+    }
+
+    @keyframes progress {
+      from { width: 0%; }
+      to   { width: 100%; }
+    }
+
+    /* Links rápidos */
+    .quick-links {
+      margin-top: 2.5rem;
+      padding-top: 2rem;
+      border-top: 0.5px solid rgba(255,255,255,0.1);
+    }
+
+    .quick-links p {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.35);
+      margin-bottom: 1rem;
+    }
+
+    .quick-links-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .quick-link {
+      font-size: 12px;
+      font-weight: 600;
+      color: rgba(255,255,255,0.6);
+      text-decoration: none;
+      padding: 6px 14px;
+      border: 0.5px solid rgba(255,255,255,0.15);
+      border-radius: 20px;
+      transition: all 0.2s;
+    }
+
+    .quick-link:hover {
+      color: var(--primary-orange);
+      border-color: rgba(249,174,57,0.4);
+      background: rgba(249,174,57,0.06);
+    }
+
+    @media (max-width: 480px) {
+      .error-number { letter-spacing: -2px; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <div class="logo-text">All<span>Door</span>Tech</div>
+
+  <div class="error-number">404</div>
+
+  <div class="divider"></div>
+
+  <h1 class="error-title">Page Not Found</h1>
+
+  <p class="error-message">
+    The page you're looking for doesn't exist or may have been moved.<br>
+    Let us help you find what you need.
+  </p>
+
+  <a href="/" class="btn-home">Back to Home</a>
+
+  <div class="countdown-wrap">
+    Redirecting in <span id="count">5</span> seconds...
+    <div class="progress-bar">
+      <div class="progress-fill"></div>
+    </div>
+  </div>
+
+  <div class="quick-links">
+    <p>Or explore</p>
+    <div class="quick-links-grid">
+      <a href="/pages/forms/form-request-service.html" class="quick-link">Request Service</a>
+      <a href="/pages/forms/form-request-estimate.html" class="quick-link">Get Estimate</a>
+      <a href="/pages/about-us/about-us.html" class="quick-link">About Us</a>
+      <a href="/#contact" class="quick-link">Contact</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+  var count = 5;
+  var el = document.getElementById('count');
+  var interval = setInterval(function() {
+    count--;
+    el.textContent = count;
+    if (count <= 0) {
+      clearInterval(interval);
+      window.location.href = '/';
+    }
+  }, 1000);
+</script>
+
+</body>
+</html>
