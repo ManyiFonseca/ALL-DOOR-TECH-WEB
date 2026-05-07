@@ -52,6 +52,37 @@
         .hero__carrusel { display: block !important; }
         .hero__mobile-static { display: none !important; }
     }
+
+   /* 1. MÓVIL (Celulares hasta 767px) -> OCULTAR CARRUSEL Y VIDEO ABOUT */
+    @media (max-width: 767.98px) {
+        /* Oculta el carrusel (esto ya lo tenías) */
+        .hero__carrusel { 
+            display: none !important; 
+            visibility: hidden !important;
+            height: 0 !important;
+            width: 0 !important;
+            opacity: 0 !important;
+            overflow: hidden !important;
+        }
+        
+        /* Mostrar la imagen estática (esto ya lo tenías) */
+        .hero__mobile-static { 
+            display: block !important; 
+        }
+
+        /* ESTO ES LO NUEVO: Apaga el video pesado en celulares */
+        .adt-main-video {
+            display: none !important;
+        }
+        
+        /* ESTO ES LO NUEVO: Pone la foto liviana de reemplazo */
+        .adt-video-wrapper {
+            background-image: url('assets/images/video-poster.webp');
+            background-size: cover;
+            background-position: center;
+            aspect-ratio: 16 / 9; 
+        }
+    }
 </style>
 
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
