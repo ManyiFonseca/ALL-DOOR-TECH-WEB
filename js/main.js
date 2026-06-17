@@ -352,36 +352,45 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-
 // --- SISTEMA AUTOMÁTICO DE COOKIES ---
 document.addEventListener("DOMContentLoaded", function() {
-    // Solo fabricamos y mostramos el cartel si el usuario NO ha aceptado antes
     if (!localStorage.getItem('cookiesAccepted')) {
         
-        // 1. Fabricamos el contenedor
+        // --- 🎨 CONFIGURACIÓN DE COLORES ---
+        const colorPrimario = "#F5B041"; // Tu amarillo/dorado
+        const colorFondo = "#1a2533";
+        const colorTextoBoton = "#1a2533"; 
+        // -----------------------------------
+
         const banner = document.createElement('div');
         banner.id = 'cookie-banner';
         
-        // Le damos el diseño oscuro y naranja directo acá
-        banner.style.cssText = 'position: fixed; bottom: 20px; left: 20px; right: 20px; background: #1a2533; color: white; padding: 20px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid #f26b27; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; font-family: "Montserrat", sans-serif;';
+        // DISEÑO SUTIL: Se quitó "right" y se agregó "max-width" y "width: calc(100% - 40px)" para móviles
+        banner.style.cssText = `position: fixed; bottom: 20px; left: 20px; width: calc(100% - 40px); max-width: 450px; background: ${colorFondo}; color: white; padding: 18px 24px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 20px rgba(0,0,0,0.4); border: 1px solid ${colorPrimario}; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-family: "Montserrat", sans-serif;`;
         
-        // 2. Le metemos el texto y el botón
+        // Contenido del cartel en Inglés y ajustado
         banner.innerHTML = `
-            <p style="margin: 0; font-size: 0.9rem; flex: 1; min-width: 250px;">We use cookies to ensure you get the best experience on our website. By continuing to browse, you agree to our use of cookies.</p>
-            <button id="accept-cookies" style="background: #f26b27; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; white-space: nowrap;">Accept</button>
+            <p style="margin: 0; font-size: 0.85rem; line-height: 1.5; color: rgba(255,255,255,0.9);">
+                We use cookies to ensure you get the best experience on our website. By continuing to browse, you agree to our use of cookies.
+            </p>
+            <button id="accept-cookies" style="background: ${colorPrimario}; color: ${colorTextoBoton}; border: none; padding: 8px 18px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; white-space: nowrap; transition: opacity 0.3s ease;">
+                Accept
+            </button>
         `;
         
-        // 3. Lo inyectamos físicamente al final de la página web
         document.body.appendChild(banner);
         
-        // 4. Le damos la orden al botón de "Accept"
-        document.getElementById('accept-cookies').addEventListener('click', function() {
+        // Efecto hover
+        const btn = document.getElementById('accept-cookies');
+        btn.addEventListener('mouseover', () => btn.style.opacity = '0.8');
+        btn.addEventListener('mouseout', () => btn.style.opacity = '1');
+
+        // Cerrar y guardar preferencia
+        btn.addEventListener('click', function() {
             localStorage.setItem('cookiesAccepted', 'true');
-            banner.remove(); // Esto destruye el cartel limpiamente
+            banner.remove(); 
         });
     }
 });
-
-
 
 
