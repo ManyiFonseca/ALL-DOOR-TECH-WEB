@@ -353,18 +353,4 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
-document.addEventListener("DOMContentLoaded", function() {
-        const banner = document.getElementById('cookie-banner');
-        const acceptBtn = document.getElementById('accept-cookies');
 
-        // Si el usuario NO ha aceptado antes, mostramos el cartel
-        if (!localStorage.getItem('cookiesAccepted')) {
-            banner.style.display = 'block';
-        }
-
-        // Al hacer clic en aceptar, guardamos la preferencia y ocultamos el cartel
-        acceptBtn.addEventListener('click', function() {
-            localStorage.setItem('cookiesAccepted', 'true');
-            banner.style.display = 'none';
-        });
-    });
