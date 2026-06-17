@@ -353,4 +353,35 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 
+// --- SISTEMA AUTOMÁTICO DE COOKIES ---
+document.addEventListener("DOMContentLoaded", function() {
+    // Solo fabricamos y mostramos el cartel si el usuario NO ha aceptado antes
+    if (!localStorage.getItem('cookiesAccepted')) {
+        
+        // 1. Fabricamos el contenedor
+        const banner = document.createElement('div');
+        banner.id = 'cookie-banner';
+        
+        // Le damos el diseño oscuro y naranja directo acá
+        banner.style.cssText = 'position: fixed; bottom: 20px; left: 20px; right: 20px; background: #1a2533; color: white; padding: 20px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 15px rgba(0,0,0,0.3); border: 1px solid #f26b27; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; font-family: "Montserrat", sans-serif;';
+        
+        // 2. Le metemos el texto y el botón
+        banner.innerHTML = `
+            <p style="margin: 0; font-size: 0.9rem; flex: 1; min-width: 250px;">We use cookies to ensure you get the best experience on our website. By continuing to browse, you agree to our use of cookies.</p>
+            <button id="accept-cookies" style="background: #f26b27; color: white; border: none; padding: 8px 20px; border-radius: 4px; cursor: pointer; font-weight: 600; white-space: nowrap;">Accept</button>
+        `;
+        
+        // 3. Lo inyectamos físicamente al final de la página web
+        document.body.appendChild(banner);
+        
+        // 4. Le damos la orden al botón de "Accept"
+        document.getElementById('accept-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            banner.remove(); // Esto destruye el cartel limpiamente
+        });
+    }
+});
+
+
+
 
