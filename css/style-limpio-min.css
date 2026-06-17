@@ -302,6 +302,22 @@ body,ol,ul{padding:0;margin:0}.hero__data-container,.hero__overlay{pointer-event
     font-size: 11px; font-weight: 600;
     padding: 2px 10px; border-radius: 20px;
   }
+
+
+  /* Definition list */
+  .def-list { list-style: none; margin: 10px 0; padding: 0; }
+  .def-list li {
+    padding: 10px 0 10px 14px;
+    border-bottom: 1px solid var(--section-border);
+    font-size: 14px;
+    color: var(--text-muted-pg);
+    border-left: 3px solid var(--primary-orange);
+    margin-bottom: 8px;
+    border-radius: 0 var(--border-radius-tech) var(--border-radius-tech) 0;
+    padding-left: 14px;
+  }
+  .def-list li:last-child { margin-bottom: 0; }
+  .def-list li strong { color: var(--primary-dark-blue); }
  
   /* Contact card */
   .contact-card {
@@ -313,6 +329,7 @@ body,ol,ul{padding:0;margin:0}.hero__data-container,.hero__overlay{pointer-event
     align-items: flex-start;
     gap: 20px;
   }
+
   .contact-card__icon {
     width: 50px; height: 50px;
     background: rgba(249,174,57,0.14);
