@@ -363,25 +363,27 @@ document.addEventListener("DOMContentLoaded", function() {
         // -----------------------------------
 
         const banner = document.createElement('div');
-        banner.id = 'cookie-banner';
+        // Le cambiamos el ID general para que no choque con nada viejo
+        banner.id = 'cookie-banner-dinamico'; 
         
-        // DISEÑO SUTIL: Se quitó "right" y se agregó "max-width" y "width: calc(100% - 40px)" para móviles
         banner.style.cssText = `position: fixed; bottom: 20px; left: 20px; width: calc(100% - 40px); max-width: 450px; background: ${colorFondo}; color: white; padding: 18px 24px; border-radius: 8px; z-index: 9999; box-shadow: 0 4px 20px rgba(0,0,0,0.4); border: 1px solid ${colorPrimario}; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-family: "Montserrat", sans-serif;`;
         
-        // Contenido del cartel en Inglés y ajustado
+        // Usamos una CLASE en el botón en lugar de un ID
         banner.innerHTML = `
             <p style="margin: 0; font-size: 0.85rem; line-height: 1.5; color: rgba(255,255,255,0.9);">
                 We use cookies to ensure you get the best experience on our website. By continuing to browse, you agree to our use of cookies.
             </p>
-            <button id="accept-cookies" style="background: ${colorPrimario}; color: ${colorTextoBoton}; border: none; padding: 8px 18px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; white-space: nowrap; transition: opacity 0.3s ease;">
+            <button class="btn-accept-cookies" style="background: ${colorPrimario}; color: ${colorTextoBoton}; border: none; padding: 8px 18px; border-radius: 4px; cursor: pointer; font-weight: 700; font-size: 0.9rem; white-space: nowrap; transition: opacity 0.3s ease;">
                 Accept
             </button>
         `;
         
         document.body.appendChild(banner);
         
+        // Buscamos el botón ESTRICTAMENTE adentro del banner que acabamos de crear
+        const btn = banner.querySelector('.btn-accept-cookies');
+        
         // Efecto hover
-        const btn = document.getElementById('accept-cookies');
         btn.addEventListener('mouseover', () => btn.style.opacity = '0.8');
         btn.addEventListener('mouseout', () => btn.style.opacity = '1');
 
@@ -392,5 +394,4 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
-
 
