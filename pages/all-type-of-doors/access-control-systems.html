@@ -349,20 +349,25 @@
         </h1>
         
         <div class="d-grid gap-3 d-sm-flex justify-content-sm-center">
-            <a href="../../pages/forms/form-request-service.html" 
-               class="btn btn-warning btn-lg px-5 py-3 fw-bold text-uppercase" 
-               style="background-color: var(--primary-orange); border-color: var(--primary-orange); color: var(--primary-dark-blue); transition: all 0.3s ease;"
-               aria-label="Request professional access control service">
-                REQUEST SERVICE
-            </a>
-            
-            <a href="../../pages/forms/form-request-estimate.html" 
-               class="btn btn-outline-light btn-lg px-5 py-3 fw-bold text-uppercase"
-               style="transition: all 0.3s ease;"
-               aria-label="Request a free estimate for security systems">
-                REQUEST ESTIMATE
-            </a>
-        </div>
+    
+    <!-- Botón de Llamada Directa (Acción Principal / Urgencias) -->
+    <a href="tel:9513761433" 
+       class="btn btn-warning btn-lg px-5 py-3 fw-bold text-uppercase" 
+       style="background-color: var(--primary-orange); border-color: var(--primary-orange); color: var(--primary-dark-blue); transition: all 0.3s ease;"
+       aria-label="Call All Door Tech immediately at (951) 376-1433">
+        <!-- Texto 'CALL NOW:' se oculta en móviles muy pequeños para cuidar el diseño -->
+        <span class="d-none d-sm-inline">CALL NOW: </span>(951) 376-1433
+    </a>
+    
+    <!-- Botón de Formulario (Acción Secundaria / Proyectos Planificados) -->
+    <a href="../../pages/forms/form-request-estimate.html" 
+       class="btn btn-outline-light btn-lg px-5 py-3 fw-bold text-uppercase"
+       style="transition: all 0.3s ease;"
+       aria-label="Request a free estimate for security systems">
+        REQUEST ESTIMATE
+    </a>
+    
+</div>
         
     </div>
 </section>
