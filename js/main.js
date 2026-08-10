@@ -157,6 +157,70 @@ document.addEventListener('DOMContentLoaded', () => {
         animateElements.forEach(el => observer.observe(el));
     }
 
+
+    // ======================================================
+    // LOGICA MULTI-STEP FORM (NUEVO FORMULARIO)
+    // ======================================================
+    const multiStepForm = document.getElementById("estimate-form");
+    if (multiStepForm) {
+        const steps = Array.from(multiStepForm.querySelectorAll(".form-step"));
+        const nextBtns = multiStepForm.querySelectorAll(".btn-next");
+        const prevBtns = multiStepForm.querySelectorAll(".btn-prev");
+        const progressSteps = multiStepForm.querySelectorAll(".progress-step");
+        
+        let currentStep = 0;
+
+        // Función accesible globalmente para resetear el formulario al paso 1 tras enviarlo
+        window.resetEstimateForm = function() {
+            currentStep = 0;
+            updateFormSteps();
+        };
+
+        function updateFormSteps() {
+            steps.forEach((step) => {
+                step.classList.remove("form-step-active");
+            });
+            
+            steps[currentStep].classList.add("form-step-active");
+
+            progressSteps.forEach((progress, index) => {
+                if (index <= currentStep) {
+                    progress.classList.add("active");
+                } else {
+                    progress.classList.remove("active");
+                }
+            });
+        }
+
+        nextBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                const currentStepEl = steps[currentStep];
+                const inputs = currentStepEl.querySelectorAll("input, select, textarea");
+                let isValid = true;
+
+                inputs.forEach(input => {
+                    if (!input.checkValidity()) {
+                        input.reportValidity(); // Muestra el mensaje de error de HTML5
+                        isValid = false;
+                    }
+                });
+
+                if (isValid) {
+                    currentStep++;
+                    updateFormSteps();
+                }
+            });
+        });
+
+        prevBtns.forEach((btn) => {
+            btn.addEventListener("click", () => {
+                currentStep--;
+                updateFormSteps();
+            });
+        });
+    }
+
+
     // ======================================================
     // F. LÓGICA DE ENVÍO - SOLUCIÓN PARA DOBLE CAPTCHA
     // ======================================================
@@ -239,6 +303,12 @@ document.addEventListener('DOMContentLoaded', () => {
                             btn.style.backgroundColor = '#28a745';
                             btn.style.color = 'white';
                             formEl.reset();
+                            
+                            // NUEVO: Resetear el formulario Multi-Step al Paso 1 visualmente si es estimate-form
+                            if (item.id === 'estimate-form' && typeof window.resetEstimateForm === 'function') {
+                                window.resetEstimateForm();
+                            }
+
                             try { grecaptcha.reset(); } catch(e){}
                             setTimeout(() => {
                                 btn.innerText = originalText;
@@ -394,4 +464,3 @@ document.addEventListener("DOMContentLoaded", function() {
         });
     }
 });
-
