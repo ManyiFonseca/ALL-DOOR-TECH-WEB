@@ -60,47 +60,61 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
     document.head.appendChild(mobileStyle);
 
-    // A. INYECCIÓN DEL CHAT
-    if (!document.getElementById('chatContainer')) {
-        const chatHTML = `
-        <div class="adt-chat-system" role="complementary" style="z-index: 2147483647;">
-            <div class="adt-chat-box" id="chatContainer" style="display:none; position: fixed; bottom: 85px; right: 20px; width: 300px; background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.2); border-radius: 20px; overflow: hidden;" role="dialog" aria-label="Chat support">
-                <div class="adt-chat-header" style="background:#223248; color:white; padding:10px 15px; display:flex; align-items:center; gap:10px; border-radius:20px 20px 0 0;">
-                    <div class="adt-avatar" style="position: relative; width:35px; height:35px; font-size:12px; background:#f9ae39; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#223248; font-weight:bold;">ADT<span style="position: absolute; bottom: 2px; right: 2px; width: 8px; height: 8px; background: #28a745; border: 2px solid #223248; border-radius: 50%;"></span></div>
-                    <div style="flex-grow:1; text-align:left;">
-                        <p style="margin:0; font-weight:bold; font-size:13px; line-height:1.2;">All Door Tech</p>
-                        <small style="color:#f9ae39; font-size:11px;">Online Now</small>
-                    </div>
-                    <button onclick="window.toggleAdtChat()" style="background:none; border:none; color:white; font-size:20px; cursor:pointer;">&times;</button>
-                </div>
-                <div style="height:180px; background:#f0f2f5; padding:10px; overflow-y:auto;" id="chatBody">
-                    <div style="background:white; padding:8px; border-radius:10px; font-size:12px; margin-bottom:10px; box-shadow:0 2px 4px rgba(0,0,0,0.05);">Hi! We are All Door Tech. How can we help you with your door project today?</div>
-                </div>
-                <div style="padding:15px; background:white; border-radius:0 0 20px 20px;">
-                    <form id="chat-form">
-                        <input type="text" name="first_name" placeholder="Your Name" required style="width:100%; margin-bottom:6px; padding:8px; border:1px solid #ddd; border-radius:8px; font-size:12px;">
-                        <input type="email" name="email" placeholder="Email Address" required style="width:100%; margin-bottom:6px; padding:8px; border:1px solid #ddd; border-radius:8px; font-size:12px;">
-                        <input type="tel" name="phone" placeholder="Phone Number" required style="width:100%; margin-bottom:6px; padding:8px; border:1px solid #ddd; border-radius:8px; font-size:12px;">
-                        <textarea name="message" placeholder="How can we help?" required style="width:100%; margin-bottom:6px; padding:8px; border:1px solid #ddd; border-radius:8px; font-size:12px; resize:none;" rows="2"></textarea>
-                        <div id="recaptcha-chat" style="margin-bottom: 10px; transform: scale(0.8); transform-origin: 0 0;"></div>
-                        <button type="submit" style="width:100%; background:#223248; color:#f9ae39; border:2px solid #f9ae39; padding:8px; border-radius:8px; font-weight:bold; cursor:pointer; font-size:12px;">SEND MESSAGE</button>
-                    </form>
-                </div>
-            </div>
-            <button class="adt-chat-trigger" onclick="window.toggleAdtChat()" id="chatBtn" style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #223248; color: #f9ae39; border: 2px solid #f9ae39; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; z-index: 2147483647;">
-                <i class="bi bi-chat-fill"></i>
-            </button>
-        </div>`;
-        document.body.insertAdjacentHTML('beforeend', chatHTML);
+    // A. INYECCIÓN DEL CHAT (VERSIÓN BLINDADA CONTRA BOOTSTRAP)
+    if (!document.getElementById('chatContainer')) {
+        const chatHTML = `
+        <div class="adt-chat-system" role="complementary" style="z-index: 2147483647;">
+            <div class="adt-chat-box" id="chatContainer" style="display:none; position: fixed; bottom: 85px; right: 20px; width: 310px; max-height: calc(100vh - 100px); background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.25); border-radius: 16px; overflow: hidden; z-index: 2147483647;" role="dialog" aria-label="Chat support">
+                
+                <!-- Encabezado del Chat -->
+                <div class="adt-chat-header" style="background:#223248; color:white; padding:10px 15px; display:flex; align-items:center; gap:10px; border-radius:16px 16px 0 0;">
+                    <div class="adt-avatar" style="position: relative; width:35px; height:35px; font-size:12px; background:#f9ae39; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#223248; font-weight:bold; flex-shrink:0;">
+                        ADT<span style="position: absolute; bottom: 2px; right: 2px; width: 8px; height: 8px; background: #28a745; border: 2px solid #223248; border-radius: 50%;"></span>
+                    </div>
+                    <div style="flex-grow:1; text-align:left;">
+                        <p style="margin:0 !important; font-weight:bold; font-size:13px; line-height:1.2; color:white !important;">All Door Tech</p>
+                        <small style="color:#f9ae39; font-size:11px;">Online Now</small>
+                    </div>
+                    <button onclick="window.toggleAdtChat()" style="background:none; border:none; color:white; font-size:22px; cursor:pointer; line-height:1; padding:0;">&times;</button>
+                </div>
 
-        setTimeout(() => {
-            if (window.grecaptcha && window.grecaptcha.render) {
-                try {
-                    grecaptcha.render('recaptcha-chat', { 'sitekey': RECAPTCHA_KEY, 'hl': 'en' });
-                } catch(e) { console.log("Captcha ya listo"); }
-            }
-        }, 1500);
-    }
+                <!-- Cuerpo del Mensaje -->
+                <div style="height:110px; background:#f0f2f5; padding:10px; overflow-y:auto;" id="chatBody">
+                    <div style="background:white; padding:8px 10px; border-radius:8px; font-size:12px; margin-bottom:10px; box-shadow:0 2px 4px rgba(0,0,0,0.05); color:#333;">
+                        Hi! We are All Door Tech. How can we help you with your door project today?
+                    </div>
+                </div>
+
+                <!-- Formulario de Inputs Blindados -->
+                <div style="padding:12px 15px; background:white; border-radius:0 0 16px 16px;">
+                    <form id="chat-form" style="margin:0 !important; padding:0 !important;">
+                        <input type="text" name="first_name" placeholder="Your Name" required style="width:100% !important; height:34px !important; margin-bottom:6px !important; padding:4px 8px !important; border:1px solid #ccc !important; border-radius:6px !important; font-size:12px !important; background:white !important; color:#333 !important; box-shadow:none !important;">
+                        <input type="email" name="email" placeholder="Email Address" required style="width:100% !important; height:34px !important; margin-bottom:6px !important; padding:4px 8px !important; border:1px solid #ccc !important; border-radius:6px !important; font-size:12px !important; background:white !important; color:#333 !important; box-shadow:none !important;">
+                        <input type="tel" name="phone" placeholder="Phone Number" required style="width:100% !important; height:34px !important; margin-bottom:6px !important; padding:4px 8px !important; border:1px solid #ccc !important; border-radius:6px !important; font-size:12px !important; background:white !important; color:#333 !important; box-shadow:none !important;">
+                        <textarea name="message" placeholder="How can we help?" required style="width:100% !important; height:45px !important; margin-bottom:6px !important; padding:4px 8px !important; border:1px solid #ccc !important; border-radius:6px !important; font-size:12px !important; resize:none !important; background:white !important; color:#333 !important; box-shadow:none !important;"></textarea>
+                        
+                        <div id="recaptcha-chat" style="margin-bottom: 6px; transform: scale(0.75); transform-origin: 0 0;"></div>
+                        
+                        <button type="submit" style="width:100% !important; height:36px !important; background:#223248 !important; color:#f9ae39 !important; border:2px solid #f9ae39 !important; padding:0 !important; border-radius:6px !important; font-weight:bold !important; cursor:pointer !important; font-size:12px !important; text-transform:uppercase !important;">SEND MESSAGE</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Botón Flotante del Chat -->
+            <button class="adt-chat-trigger" onclick="window.toggleAdtChat()" id="chatBtn" style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #223248; color: #f9ae39; border: 2px solid #f9ae39; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; z-index: 2147483647;">
+                <i class="bi bi-chat-fill"></i>
+            </button>
+        </div>`;
+        document.body.insertAdjacentHTML('beforeend', chatHTML);
+
+        setTimeout(() => {
+            if (window.grecaptcha && window.grecaptcha.render) {
+                try {
+                    grecaptcha.render('recaptcha-chat', { 'sitekey': RECAPTCHA_KEY, 'hl': 'en' });
+                } catch(e) { console.log("Captcha ya listo"); }
+            }
+        }, 1500);
+    }
 
     // --- B, C, D, E Se mantienen ---
     const menuCheckbox = document.getElementById('menu-toggle');
