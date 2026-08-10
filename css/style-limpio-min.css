@@ -371,39 +371,4 @@ body,ol,ul{padding:0;margin:0}.hero__data-container,.hero__overlay{pointer-event
 
 
 
-/* Clean Card Stepper Styles */
-.progress-step .step-num {
-    width: 32px;
-    height: 32px;
-    line-height: 32px;
-    border-radius: 50%;
-    background: #e9ecef;
-    color: #6c757d;
-    margin: 0 auto;
-    font-size: 0.9rem;
-    transition: all 0.3s ease;
-}
-
-.progress-step.active .step-num {
-    background: #f39c12;
-    color: #fff;
-}
-
-.progress-step.active {
-    color: #223248 !important;
-}
-
-.form-step {
-    display: none;
-}
-
-.form-step.form-step-active {
-    display: block;
-    animation: fadeIn 0.3s ease-in-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(6px); }
-    to { opacity: 1; transform: translateY(0); }
-}
 
