@@ -58,50 +58,153 @@ document.addEventListener('DOMContentLoaded', () => {
             #recaptcha-chat { transform: scale(0.77); transform-origin: 0 0; }
         }
     `;
-    document.head.appendChild(mobileStyle);
+   document.addEventListener('DOMContentLoaded', () => {
 
-    // A. INYECCIÓN DEL CHAT (VERSIÓN BLINDADA CONTRA BOOTSTRAP)
+    // A. INYECCIÓN DEL CHAT (VERSIÓN BLINDADA Y OPTIMIZADA PARA MÓVIL)
     if (!document.getElementById('chatContainer')) {
         const chatHTML = `
+        <style>
+            /* Blindaje total contra Bootstrap y estilos globales */
+            #chatContainer {
+                display: none; 
+                flex-direction: column;
+                position: fixed; 
+                bottom: 90px; 
+                right: 20px; 
+                width: 320px; 
+                max-height: 85vh !important; /* Se ajusta a la pantalla sin romperse */
+                background: white; 
+                box-shadow: 0 10px 30px rgba(0,0,0,0.3); 
+                border-radius: 16px; 
+                overflow: hidden; 
+                z-index: 2147483647;
+                font-family: "Segoe UI", Arial, sans-serif;
+            }
+            .adt-chat-header {
+                background: #223248; 
+                color: white; 
+                padding: 12px 15px; 
+                display: flex; 
+                align-items: center; 
+                gap: 12px;
+                flex: 0 0 auto !important; /* El encabezado NO se achica */
+            }
+            #chatBody {
+                flex: 1 1 auto !important; /* Crece y se adapta al espacio libre */
+                background: #f0f2f5; 
+                padding: 15px; 
+                overflow-y: auto !important; /* Scroll interno solo si es necesario */
+            }
+            .chat-msg-bubble {
+                background: white; 
+                padding: 12px; 
+                border-radius: 8px; 
+                font-size: 13px; 
+                box-shadow: 0 1px 3px rgba(0,0,0,0.1); 
+                color: #333;
+                line-height: 1.4;
+                margin: 0;
+            }
+            .adt-chat-form-wrapper {
+                padding: 12px 15px; 
+                background: white;
+                flex: 0 0 auto !important; /* El formulario NO se achica */
+                border-top: 1px solid #eee;
+            }
+            #chat-form {
+                margin: 0 !important;
+                padding: 0 !important;
+                display: flex;
+                flex-direction: column;
+                gap: 7px;
+            }
+            /* Forzar estilos de inputs para ganarle a Bootstrap */
+            #chat-form input, #chat-form textarea {
+                width: 100% !important;
+                margin: 0 !important; 
+                padding: 8px 10px !important;
+                border: 1px solid #ddd !important;
+                border-radius: 6px !important;
+                font-size: 14px !important; /* 14px evita zoom automático en iPhone */
+                line-height: 1.4 !important;
+                background: #fff !important;
+                color: #333 !important;
+                box-shadow: none !important;
+                height: 38px !important;
+                box-sizing: border-box !important;
+            }
+            #chat-form textarea {
+                height: 52px !important;
+                resize: none !important;
+            }
+            #chat-form button {
+                width: 100% !important; 
+                height: 40px !important; 
+                background: #223248 !important; 
+                color: #f9ae39 !important; 
+                border: 2px solid #f9ae39 !important; 
+                border-radius: 6px !important; 
+                font-weight: bold !important; 
+                cursor: pointer !important; 
+                font-size: 13px !important; 
+                margin-top: 2px !important;
+                text-transform: uppercase !important;
+            }
+            
+            /* Reglas específicas y seguras para teléfonos móviles */
+            @media (max-width: 480px) {
+                #chatContainer {
+                    width: calc(100vw - 30px) !important;
+                    right: 15px !important;
+                    bottom: 85px !important;
+                    max-height: 82vh !important;
+                }
+                #chat-form input { height: 35px !important; padding: 6px 10px !important; }
+                #chat-form textarea { height: 46px !important; }
+                .adt-chat-form-wrapper { padding: 10px 12px; }
+                #chatBody { padding: 12px; }
+            }
+        </style>
+
         <div class="adt-chat-system" role="complementary" style="z-index: 2147483647;">
-            <div class="adt-chat-box" id="chatContainer" style="display:none; position: fixed; bottom: 85px; right: 20px; width: 310px; max-height: calc(100vh - 100px); background: white; box-shadow: 0 10px 25px rgba(0,0,0,0.25); border-radius: 16px; overflow: hidden; z-index: 2147483647;" role="dialog" aria-label="Chat support">
+            <div id="chatContainer" role="dialog" aria-label="Chat support">
                 
-                <!-- Encabezado del Chat -->
-                <div class="adt-chat-header" style="background:#223248; color:white; padding:10px 15px; display:flex; align-items:center; gap:10px; border-radius:16px 16px 0 0;">
-                    <div class="adt-avatar" style="position: relative; width:35px; height:35px; font-size:12px; background:#f9ae39; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#223248; font-weight:bold; flex-shrink:0;">
-                        ADT<span style="position: absolute; bottom: 2px; right: 2px; width: 8px; height: 8px; background: #28a745; border: 2px solid #223248; border-radius: 50%;"></span>
+                <!-- Encabezado -->
+                <div class="adt-chat-header">
+                    <div style="position: relative; width:35px; height:35px; font-size:12px; background:#f9ae39; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#223248; font-weight:bold; flex-shrink:0;">
+                        ADT<span style="position: absolute; bottom: 0px; right: 0px; width: 10px; height: 10px; background: #28a745; border: 2px solid #223248; border-radius: 50%;"></span>
                     </div>
-                    <div style="flex-grow:1; text-align:left;">
-                        <p style="margin:0 !important; font-weight:bold; font-size:13px; line-height:1.2; color:white !important;">All Door Tech</p>
+                    <div style="flex-grow:1; text-align:left; line-height: 1.2;">
+                        <p style="margin:0; font-weight:bold; font-size:14px; color:white;">All Door Tech</p>
                         <small style="color:#f9ae39; font-size:11px;">Online Now</small>
                     </div>
-                    <button onclick="window.toggleAdtChat()" style="background:none; border:none; color:white; font-size:22px; cursor:pointer; line-height:1; padding:0;">&times;</button>
+                    <button onclick="window.toggleAdtChat()" style="background:none; border:none; color:white; font-size:24px; cursor:pointer; line-height:1; padding:0;">&times;</button>
                 </div>
 
-                <!-- Cuerpo del Mensaje -->
-                <div style="height:110px; background:#f0f2f5; padding:10px; overflow-y:auto;" id="chatBody">
-                    <div style="background:white; padding:8px 10px; border-radius:8px; font-size:12px; margin-bottom:10px; box-shadow:0 2px 4px rgba(0,0,0,0.05); color:#333;">
+                <!-- Cuerpo del Chat -->
+                <div id="chatBody">
+                    <div class="chat-msg-bubble">
                         Hi! We are All Door Tech. How can we help you with your door project today?
                     </div>
                 </div>
 
-                <!-- Formulario de Inputs Blindados -->
-                <div style="padding:12px 15px; background:white; border-radius:0 0 16px 16px;">
-                    <form id="chat-form" style="margin:0 !important; padding:0 !important;">
-                        <input type="text" name="first_name" placeholder="Your Name" required style="width:100% !important; height:34px !important; margin-bottom:6px !important; padding:4px 8px !important; border:1px solid #ccc !important; border-radius:6px !important; font-size:12px !important; background:white !important; color:#333 !important; box-shadow:none !important;">
-                        <input type="email" name="email" placeholder="Email Address" required style="width:100% !important; height:34px !important; margin-bottom:6px !important; padding:4px 8px !important; border:1px solid #ccc !important; border-radius:6px !important; font-size:12px !important; background:white !important; color:#333 !important; box-shadow:none !important;">
-                        <input type="tel" name="phone" placeholder="Phone Number" required style="width:100% !important; height:34px !important; margin-bottom:6px !important; padding:4px 8px !important; border:1px solid #ccc !important; border-radius:6px !important; font-size:12px !important; background:white !important; color:#333 !important; box-shadow:none !important;">
-                        <textarea name="message" placeholder="How can we help?" required style="width:100% !important; height:45px !important; margin-bottom:6px !important; padding:4px 8px !important; border:1px solid #ccc !important; border-radius:6px !important; font-size:12px !important; resize:none !important; background:white !important; color:#333 !important; box-shadow:none !important;"></textarea>
+                <!-- Formulario -->
+                <div class="adt-chat-form-wrapper">
+                    <form id="chat-form">
+                        <input type="text" name="first_name" placeholder="Your Name" required>
+                        <input type="email" name="email" placeholder="Email Address" required>
+                        <input type="tel" name="phone" placeholder="Phone Number" required>
+                        <textarea name="message" placeholder="How can we help?" required></textarea>
                         
-                        <div id="recaptcha-chat" style="margin-bottom: 6px; transform: scale(0.75); transform-origin: 0 0;"></div>
+                        <div id="recaptcha-chat" style="transform: scale(0.78); transform-origin: 0 0; margin-bottom: 2px;"></div>
                         
-                        <button type="submit" style="width:100% !important; height:36px !important; background:#223248 !important; color:#f9ae39 !important; border:2px solid #f9ae39 !important; padding:0 !important; border-radius:6px !important; font-weight:bold !important; cursor:pointer !important; font-size:12px !important; text-transform:uppercase !important;">SEND MESSAGE</button>
+                        <button type="submit">SEND MESSAGE</button>
                     </form>
                 </div>
             </div>
 
-            <!-- Botón Flotante del Chat -->
-            <button class="adt-chat-trigger" onclick="window.toggleAdtChat()" id="chatBtn" style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #223248; color: #f9ae39; border: 2px solid #f9ae39; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; z-index: 2147483647;">
+            <!-- Botón flotante -->
+            <button class="adt-chat-trigger" onclick="window.toggleAdtChat()" id="chatBtn" style="position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: #223248; color: #f9ae39; border: 2px solid #f9ae39; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 24px; cursor: pointer; z-index: 2147483647; box-shadow: 0 4px 10px rgba(0,0,0,0.2);">
                 <i class="bi bi-chat-fill"></i>
             </button>
         </div>`;
